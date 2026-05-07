@@ -468,20 +468,20 @@
       </div>
 
       <!--
-        DATA COLLECTION — Netlify Forms
+        DATA COLLECTION — Formspree
         
         Setup instructions:
-        1. Deploy this file to Netlify (push to your repo)
-        2. Log in to app.netlify.com → select carreb-net site
-        3. Go to Forms tab → responses appear in real-time
-        4. Export CSV anytime to Google Sheets for analysis
+        1. Go to formspree.io → create free account → New Form
+        2. Copy your form endpoint (e.g. https://formspree.io/f/abcd1234)
+        3. Replace YOUR_FORM_ID in the <form action="..."> above
+        4. Deploy this file to carreb.com.au as normal
+        5. Responses appear in Formspree dashboard → export CSV → import to Excel
         
-        Free tier: 100 form submissions/month (more than enough for pre-launch)
+        Free tier: 50 submissions/month. Upgrade if needed.
       -->
       <form
         id="surveyForm"
-        name="carreb-survey"
-        data-netlify="true"
+        action="https://formspree.io/f/mdablljv"
         method="POST"
       >
         <input type="hidden" name="_subject" value="Carreb Survey Response" />
@@ -545,31 +545,31 @@
           <p class="checkbox-hint">Select up to 3 — the ones that genuinely excite you</p>
           <div class="options" id="featuresOptions">
             <label class="option">
-              <input type="checkbox" name="q10_features" value="CORE Rating" />
+              <input type="checkbox" name="q4_features" value="CORE Rating" />
               <span class="feature-label"><strong>CORE Rating</strong><em>One number. Total clarity. From confused to confident in 60 seconds — no spreadsheets, no jargon, no guessing</em></span>
             </label>
             <label class="option">
-              <input type="checkbox" name="q10_features" value="CORE Dial" />
+              <input type="checkbox" name="q4_features" value="CORE Dial" />
               <span class="feature-label"><strong>CORE Dial</strong><em>Net Zero Ninja or Captain Carbon? A visual dial that instantly places any car on the spectrum from best-in-class to budget-buster — so you can narrow your choices fast</em></span>
             </label>
             <label class="option">
-              <input type="checkbox" name="q10_features" value="Spotlights" />
+              <input type="checkbox" name="q4_features" value="Spotlights" />
               <span class="feature-label"><strong>Spotlights</strong><em>Cut the noise. Surface the winners. Five badges that flag the cars that genuinely stand out — Range Kings, Unicorn Matches, Green &amp; Lean and more</em></span>
             </label>
             <label class="option">
-              <input type="checkbox" name="q10_features" value="RideReveal" />
+              <input type="checkbox" name="q4_features" value="RideReveal" />
               <span class="feature-label"><strong>RideReveal</strong><em>What does your car say about you? A surprisingly accurate personality profile based on your vehicle choices — and designed to share instantly with friends</em></span>
             </label>
             <label class="option">
-              <input type="checkbox" name="q10_features" value="Estimated Cost of Ownership (COO)" />
+              <input type="checkbox" name="q4_features" value="Estimated Cost of Ownership (COO)" />
               <span class="feature-label"><strong>Estimated Cost of Ownership (COO)</strong><em>Beyond the sticker price. See the estimated cost across fuel, servicing, insurance, registration and depreciation — tailored to how you actually drive</em></span>
             </label>
             <label class="option">
-              <input type="checkbox" name="q10_features" value="CO2 Impact" />
+              <input type="checkbox" name="q4_features" value="CO2 Impact" />
               <span class="feature-label"><strong>CO<sub>2</sub> Impact</strong><em>Know your footprint, not just your fuel bill. Government-sourced emissions data that puts your car's environmental reality in plain sight</em></span>
             </label>
             <label class="option">
-              <input type="checkbox" name="q10_features" value="Estimated savings vs current car" />
+              <input type="checkbox" name="q4_features" value="Estimated savings vs current car" />
               <span class="feature-label"><strong>Estimated savings vs. your current car</strong><em>See the number that changes everything. Some drivers find it's over $2,700 a year — what could yours be?</em></span>
             </label>
           </div>
@@ -584,11 +584,11 @@
             What's the most valuable thing Carreb offers you personally?
           </div>
           <div class="options">
-            <label class="option"><input type="radio" name="q4_value" value="Seeing the real estimated cost to own — not just the sticker price" required /><label>Seeing the real estimated cost to own — not just the sticker price</label></label>
-            <label class="option"><input type="radio" name="q4_value" value="An independent view with no sales agenda" /><label>An independent view with no sales agenda</label></label>
-            <label class="option"><input type="radio" name="q4_value" value="Making sense of the EV vs petrol vs hybrid question" /><label>Making sense of the EV vs petrol vs hybrid question</label></label>
-            <label class="option"><input type="radio" name="q4_value" value="Understanding the carbon footprint of my choice" /><label>Understanding the carbon footprint of my choice</label></label>
-            <label class="option"><input type="radio" name="q4_value" value="None of these stand out" /><label>None of these stand out</label></label>
+            <label class="option"><input type="radio" name="q5_benefit" value="Seeing the real estimated cost to own — not just the sticker price" required /><label>Seeing the real estimated cost to own — not just the sticker price</label></label>
+            <label class="option"><input type="radio" name="q5_benefit" value="An independent view with no sales agenda" /><label>An independent view with no sales agenda</label></label>
+            <label class="option"><input type="radio" name="q5_benefit" value="Making sense of the EV vs petrol vs hybrid question" /><label>Making sense of the EV vs petrol vs hybrid question</label></label>
+            <label class="option"><input type="radio" name="q5_benefit" value="Understanding the carbon footprint of my choice" /><label>Understanding the carbon footprint of my choice</label></label>
+            <label class="option"><input type="radio" name="q5_benefit" value="None of these stand out" /><label>None of these stand out</label></label>
           </div>
         </div>
 
@@ -601,10 +601,10 @@
             Did the site feel credible and trustworthy?
           </div>
           <div class="options">
-            <label class="option"><input type="radio" name="q5_trust" value="Yes" required /><label>Yes</label></label>
-            <label class="option"><input type="radio" name="q5_trust" value="Mostly" /><label>Mostly</label></label>
-            <label class="option"><input type="radio" name="q5_trust" value="Not sure" /><label>Not sure</label></label>
-            <label class="option"><input type="radio" name="q5_trust" value="No" /><label>No</label></label>
+            <label class="option"><input type="radio" name="q6_trust" value="Yes" required /><label>Yes</label></label>
+            <label class="option"><input type="radio" name="q6_trust" value="Mostly" /><label>Mostly</label></label>
+            <label class="option"><input type="radio" name="q6_trust" value="Not sure" /><label>Not sure</label></label>
+            <label class="option"><input type="radio" name="q6_trust" value="No" /><label>No</label></label>
           </div>
         </div>
 
@@ -689,7 +689,7 @@
         <!-- Optional comment box — unnumbered -->
         <div class="comment-box">
           <span class="comment-box-label">Anything else on your mind? (Optional)</span>
-          <textarea name="q6_feedback" placeholder="Your honest thoughts..."></textarea>
+          <textarea name="q11_feedback" placeholder="Your honest thoughts..."></textarea>
         </div>
 
         <div class="submit-wrap">
@@ -723,8 +723,8 @@
 
     // Checkbox max-3 enforcement for Q10
     function updateCheckboxStates() {
-      const allBoxes = document.querySelectorAll('input[name="q10_features"]');
-      const checkedCount = document.querySelectorAll('input[name="q10_features"]:checked').length;
+      const allBoxes = document.querySelectorAll('input[name="q4_features"]');
+      const checkedCount = document.querySelectorAll('input[name="q4_features"]:checked').length;
       allBoxes.forEach(cb => {
         if (!cb.checked) cb.disabled = checkedCount >= 3;
       });
@@ -741,7 +741,7 @@
       cb.addEventListener('change', updateCheckboxStates);
     });
 
-    // Form submission
+    // Form submission — Formspree
     const form = document.getElementById('surveyForm');
     const successScreen = document.getElementById('successScreen');
     const submitBtn = document.getElementById('submitBtn');
@@ -750,7 +750,7 @@
       e.preventDefault();
 
       // Require at least 1 checkbox for Q4 (features)
-      const checkedFeatures = document.querySelectorAll('input[name="q10_features"]:checked').length;
+      const checkedFeatures = document.querySelectorAll('input[name="q4_features"]:checked').length;
       if (checkedFeatures === 0) {
         const featuresBlock = document.getElementById('featuresOptions');
         featuresBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -765,9 +765,17 @@
       submitBtn.disabled = true;
 
       try {
+        // Build FormData, collapsing multiple checkboxes into one JSON array field
+        // to match the existing Excel analysis format (e.g. ["CORE Rating","COO"])
+        const checkedBoxes = [...document.querySelectorAll('input[name="q4_features"]:checked')].map(cb => cb.value);
+        const formData = new FormData(form);
+        // Remove the individual checkbox entries Formspree would receive separately
+        [...formData.keys()].filter(k => k === 'q4_features').forEach(() => formData.delete('q4_features'));
+        formData.append('q4_features', checkedBoxes.length === 1 ? checkedBoxes[0] : JSON.stringify(checkedBoxes));
+
         const response = await fetch(form.action, {
           method: 'POST',
-          body: new FormData(form),
+          body: formData,
           headers: { 'Accept': 'application/json' }
         });
 
@@ -776,7 +784,8 @@
           successScreen.style.display = 'block';
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-          throw new Error('Failed');
+          const data = await response.json().catch(() => ({}));
+          throw new Error(data.error || 'Submission failed');
         }
       } catch (err) {
         submitBtn.textContent = 'Submit Feedback';
