@@ -1,225 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carreb — Arriving 1 June 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --dark:       #0d1f14;
-      --dark-mid:   #162e20;
-      --lime:       #52b788;
-      --lime-bright:#74c69d;
-      --lime-glow:  #78e14a;
-      --white:      #ffffff;
-      --white-60:   rgba(255,255,255,0.60);
-      --white-25:   rgba(255,255,255,0.25);
-      --white-08:   rgba(255,255,255,0.08);
-    }
-
-    html, body {
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      font-family: 'Manrope', sans-serif;
-      background: var(--dark);
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    /* Radial glow background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 55% at 50% 45%, rgba(82,183,136,0.13) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(116,198,157,0.07) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Subtle grain texture */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
-    }
-
-    .stage {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 24px;
-      gap: 0;
-      animation: fadeUp 1.2s cubic-bezier(0.22,1,0.36,1) both;
-    }
-
-    /* ── Logo ── */
-    .logo-wrap {
-      margin-bottom: 48px;
-      opacity: 0;
-      animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.2s both;
-    }
-
-    .logo-wrap img,
-    .logo-wrap svg {
-      width: auto;
-      height: clamp(64px, 11vw, 110px);
-      border-radius: 12px;
-      filter: drop-shadow(0 0 32px rgba(116,198,157,0.25));
-    }
-
-    /* ── Divider line ── */
-    .rule {
-      width: clamp(40px, 8vw, 72px);
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--lime), transparent);
-      margin: 40px auto;
-      opacity: 0;
-      animation: fadeIn 1s ease 0.8s both;
-    }
-
-    /* ── Headline ── */
-    .headline {
-      font-family: 'Lora', serif;
-      font-size: clamp(36px, 7vw, 80px);
-      font-weight: 600;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      opacity: 0;
-      animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.5s both;
-    }
-
-    .headline .accent {
-      color: var(--lime-bright);
-      font-style: italic;
-    }
-
-    /* ── Date badge ── */
-    .date-badge {
-      margin-top: 32px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--white-08);
-      border: 1px solid rgba(82,183,136,0.28);
-      border-radius: 100px;
-      padding: 10px 24px;
-      opacity: 0;
-      animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.75s both;
-    }
-
-    .date-badge .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--lime-glow);
-      box-shadow: 0 0 8px var(--lime-glow);
-      animation: pulse 2.4s ease-in-out infinite;
-    }
-
-    .date-badge span {
-      font-size: clamp(13px, 2vw, 16px);
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--lime-bright);
-    }
-
-    /* ── Tagline ── */
-    .tagline {
-      margin-top: 28px;
-      font-size: clamp(14px, 2vw, 17px);
-      font-weight: 500;
-      color: var(--white-60);
-      letter-spacing: 0.01em;
-      line-height: 1.6;
-      max-width: 420px;
-      opacity: 0;
-      animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 1s both;
-    }
-
-    /* ── URL ── */
-    .url {
-      margin-top: 40px;
-      font-size: clamp(13px, 1.8vw, 15px);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--white-25);
-      text-decoration: none;
-      text-transform: lowercase;
-      transition: color 0.3s;
-      opacity: 0;
-      animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 1.2s both;
-    }
-
-    .url:hover { color: var(--lime-bright); }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(0.75); }
-    }
-
-    /* ── Mobile ── */
-    @media (max-width: 480px) {
-      .logo-wrap { margin-bottom: 36px; }
-      .rule { margin: 32px auto; }
-      .date-badge { padding: 9px 20px; }
-      .tagline { max-width: 320px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carreb — Independent car cost & emissions. Launching July 2026</title>
+<meta name="description" content="Carreb shows the estimated 5-year cost of ownership and indicative CO₂ for every new car in Australia. Editorially independent. Join the waitlist — launching July 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
+<style>
+/* Carreb teaser — v6.4 tokens (light) */
+:root{
+  --ink:#111E18;--forest:#244034;--lime:#C2E861;--lime-2:#90C121;--lime-hover:#ADDC3F;
+  --lime-tint-2:#EFF9CE;--olive:#547615;--olive-deep:#445D17;--muted:#68726E;--muted-2:#4A504D;
+  --bg:#F7FCFF;--surface:#FFFFFF;--input-border:#C3D8CB;--border:#DDE1DE;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  font-family:'Nunito Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--bg);color:var(--ink);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:40px 24px;-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 8%, rgba(194,232,97,.30) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at 50% 100%, rgba(36,64,52,.05) 0%, transparent 55%);
+}
+.stage{position:relative;z-index:1;width:100%;max-width:560px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;animation:rise 1s cubic-bezier(.22,1,.36,1) both}
+.logo{display:inline-block;margin-bottom:34px;cursor:pointer;border-radius:14px;opacity:0;animation:rise .9s cubic-bezier(.22,1,.36,1) .1s both;transition:transform .18s ease}
+.logo:hover{transform:translateY(-2px)}
+.logo svg{height:clamp(58px,10vw,92px);width:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(17,30,24,.16)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--olive-deep);background:#fff;border:1px solid var(--input-border);
+  border-radius:999px;padding:8px 16px;box-shadow:0 1px 2px rgba(17,30,24,.06);
+  opacity:0;animation:rise .9s ease .25s both;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--lime-2);
+  box-shadow:0 0 0 4px rgba(144,193,33,.18);animation:pulse 2.4s ease-in-out infinite}
+h1{
+  font-size:clamp(32px,6vw,52px);font-weight:800;line-height:1.06;letter-spacing:-.02em;
+  margin-top:22px;max-width:15ch;opacity:0;animation:rise .9s ease .38s both;
+}
+h1 .accent{color:var(--olive);position:relative;white-space:nowrap}
+h1 .accent::after{content:'';position:absolute;left:0;right:0;bottom:.06em;height:.26em;
+  background:var(--lime);opacity:.45;border-radius:3px;z-index:-1;pointer-events:none}
+.tagline{margin-top:18px;font-size:clamp(15px,2vw,18px);font-weight:600;color:var(--muted-2);
+  max-width:42ch;line-height:1.6;opacity:0;animation:rise .9s ease .52s both}
+/* form */
+.capture{width:100%;max-width:440px;margin-top:30px;opacity:0;animation:rise .9s ease .66s both}
+.field-row{display:flex;gap:8px;background:var(--surface);border:1.5px solid var(--input-border);
+  border-radius:14px;padding:7px;box-shadow:0 10px 30px rgba(17,30,24,.08);
+  transition:border-color .18s ease,box-shadow .18s ease}
+.field-row:focus-within{border-color:var(--lime-2);box-shadow:0 0 0 4px rgba(144,193,33,.16),0 10px 30px rgba(17,30,24,.08)}
+.field-row input{flex:1 1 auto;min-width:0;border:0;outline:0;background:transparent;font:inherit;
+  font-size:16px;color:var(--ink);padding:12px 14px}
+.field-row input::placeholder{color:#9aa4a0}
+.submit{flex:0 0 auto;border:0;cursor:pointer;background:var(--lime);color:var(--ink);font:inherit;
+  font-weight:800;font-size:15px;padding:13px 20px;border-radius:10px;white-space:nowrap;
+  transition:background .18s ease,transform .12s ease}
+.submit:hover{background:var(--lime-hover);transform:translateY(-1px)}
+.submit:disabled{opacity:.7;cursor:progress;transform:none}
+.honey{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.field-error{display:block;color:#D0262F;font-size:13px;font-weight:700;margin:9px 2px 0}
+.reassure{margin-top:12px;font-size:13px;font-weight:600;color:var(--muted);display:inline-flex;
+  align-items:center;gap:7px;justify-content:center}
+.reassure svg{width:14px;height:14px;flex:none}
+.success{display:none;background:var(--lime-tint-2);border:1.5px solid var(--lime-2);border-radius:16px;
+  padding:24px;box-shadow:0 10px 30px rgba(17,30,24,.08)}
+.success.show{display:block;animation:rise .4s ease}
+.success .tick{width:44px;height:44px;border-radius:50%;background:var(--lime);display:grid;place-items:center;margin:0 auto 12px}
+.success .tick svg{width:23px;height:23px}
+.success h3{font-size:18px;font-weight:800;margin-bottom:6px}
+.success p{font-size:14px;color:var(--muted-2)}
+/* date badge */
+.badge{margin-top:30px;display:inline-flex;align-items:center;gap:9px;background:#fff;
+  border:1px solid var(--input-border);border-radius:999px;padding:9px 18px;
+  box-shadow:0 1px 2px rgba(17,30,24,.06);opacity:0;animation:rise .9s ease .8s both}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--lime-2);
+  box-shadow:0 0 0 4px rgba(144,193,33,.18);animation:pulse 2.4s ease-in-out infinite}
+.badge span{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--olive-deep)}
+.url{margin-top:26px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--muted);
+  text-decoration:none;opacity:0;animation:rise .9s ease .92s both}
+.url:hover{color:var(--olive)}
+.indep{margin-top:8px;font-size:12px;color:#9aa4a0;font-weight:600;opacity:0;animation:rise .9s ease 1s both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--lime-2);outline-offset:2px;border-radius:6px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.stage *{opacity:1!important}}
+@media(max-width:480px){
+  .field-row{flex-wrap:wrap}.field-row input{flex:1 1 100%}.submit{flex:1 1 100%}
+}
+</style>
 </head>
 <body>
-  <div class="stage">
+  <main class="stage">
+    <a class="logo" href="index-prelaunch-July2026.html?play=1" aria-label="Enter Carreb — open the homepage">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 373.92 255" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Carreb"><defs><clipPath id="t-bg"><path d="M0 0.03h373.84v254.94H0z"/></clipPath><clipPath id="t-i"><path d="M210.16 131.49h37.84v42.26h-37.84z"/></clipPath><clipPath id="t-w1"><path d="M285.71 115.73L81.04 121.34L79.56 67.44L284.23 61.84z"/></clipPath><clipPath id="t-w2"><path d="M24.86 131.84L358.58 153.79L361.5 109.44L27.77 87.48z"/></clipPath></defs><g clip-path="url(#t-bg)"><path fill="#000" d="M0 0.03h374.17v254.94H0z"/></g><g fill="#fff"><g transform="translate(85.03,173.01)"><path d="M18.75.66C15.26.66 12.38.0 10.09-1.3 7.82-2.61 6.11-4.45 4.97-6.83 3.83-9.2 3.27-11.94 3.27-15.05c0-2.61.36-5.16 1.09-7.65.73-2.5 1.86-4.74 3.41-6.72 1.55-1.99 3.51-3.58 5.89-4.77 2.38-1.19 5.21-1.78 8.5-1.78 1.84 0 3.62.25 5.34.73 1.72.48 3.21 1.16 4.47 2.03.68.39 1.16.86 1.45 1.42.29.56.39 1.09.29 1.6-.09.51-.3.95-.61 1.31-.31.37-.71.58-1.2.63-.48.04-.99-.11-1.52-.45-1.22-.86-2.48-1.49-3.8-1.88-1.3-.39-2.7-.59-4.2-.59-2.38 0-4.39.46-6.03 1.39-1.65.92-2.99 2.15-4.03 3.7-1.04 1.54-1.81 3.27-2.3 5.19-.48 1.92-.72 3.84-.72 5.78 0 3.29.79 5.94 2.36 7.95 1.57 2.01 4.18 3.02 7.81 3.02 1.16 0 2.38-.18 3.64-.55 1.26-.36 2.52-.95 3.77-1.78.49-.33.97-.46 1.45-.39.49.07.89.28 1.2.62.31.34.52.73.61 1.19.1.46.07.93-.11 1.42-.17.48-.54.91-1.11 1.3-1.31.93-2.92 1.66-4.81 2.19-1.89.53-3.67.79-5.36.79z"/></g><g transform="translate(118.67,173.01)"><path d="M14.45.66c-2.03 0-3.93-.46-5.7-1.38-1.76-.93-3.18-2.19-4.25-3.78-1.06-1.6-1.59-3.42-1.59-5.45 0-2.52.69-4.54 2.06-6.06 1.38-1.53 3.55-2.66 6.5-3.38 2.96-.73 6.77-1.09 11.42-1.09h5.81l-.58 3.84h-4.44c-3.73 0-6.67.2-8.83.59-2.16.39-3.7 1.04-4.62 1.95-.92.92-1.38 2.18-1.38 3.78 0 2.13.71 3.75 2.14 4.86 1.44 1.12 3.07 1.67 4.91 1.67 1.79 0 3.45-.38 4.97-1.15 1.53-.78 2.83-1.93 3.89-3.45 1.07-1.53 1.77-3.33 2.11-5.41l1.39-8.87c.48-2.8.13-4.93-1.06-6.38-1.19-1.46-3.33-2.19-6.42-2.19-1.79 0-3.49.17-5.09.51-1.59.34-3.19.96-4.79 1.87-.63.34-1.21.49-1.74.44-.53-.05-.97-.26-1.31-.62-.34-.36-.53-.79-.58-1.27-.05-.49.07-.97.36-1.45.29-.49.8-.93 1.53-1.31 1.84-1.01 3.84-1.74 5.98-2.21 2.16-.47 4.25-.7 6.3-.7 3.29 0 5.91.62 7.88 1.86 1.97 1.23 3.31 2.96 4.03 5.19.73 2.23.85 4.85.38 7.86l-2.98 18.67c-.09.97-.42 1.7-.98 2.19-.55.48-1.29.72-2.22.72-.87 0-1.51-.29-1.92-.87-.41-.58-.54-1.41-.39-2.47l.94-5.89.58.74c-.63 1.94-1.59 3.55-2.88 4.83-1.28 1.28-2.74 2.24-4.39 2.88-1.65.62-3.32.94-5.02.94z"/></g><g transform="translate(157.17,173.01)"><path d="M5.59.51c-.92 0-1.58-.29-2-.87-.41-.58-.54-1.43-.39-2.55l4.72-30.08c.19-.97.55-1.68 1.11-2.14.56-.46 1.3-.69 2.23-.69.86 0 1.52.29 1.95.87.44.57.58 1.39.44 2.45l-.88 5.61h-.8c1.02-2.91 2.73-5.13 5.13-6.69 2.39-1.55 5.1-2.37 8.11-2.47 1.06-.05 1.78.08 2.17.39.38.31.58.86.58 1.64 0 1.01-.25 1.75-.73 2.22-.48.46-1.25.76-2.31.91l-1.45.06c-3.88.34-6.66 1.51-8.36 3.5-1.7 1.98-2.81 4.59-3.34 7.84l-2.75 17.14c-.11.93-.45 1.64-1.03 2.13-.57.48-1.37.72-2.39.72z"/></g><g transform="translate(183.18,173.01)"><path d="M5.59.51c-.92 0-1.58-.29-2-.87-.41-.58-.54-1.43-.39-2.55l4.72-30.08c.19-.97.55-1.68 1.11-2.14.56-.46 1.3-.69 2.23-.69.86 0 1.52.29 1.95.87.44.57.58 1.39.44 2.45l-.88 5.61h-.8c1.02-2.91 2.73-5.13 5.13-6.69 2.39-1.55 5.1-2.37 8.11-2.47 1.06-.05 1.78.08 2.17.39.38.31.58.86.58 1.64 0 1.01-.25 1.75-.73 2.22-.48.46-1.25.76-2.31.91l-1.45.06c-3.88.34-6.66 1.51-8.36 3.5-1.7 1.98-2.81 4.59-3.34 7.84l-2.75 17.14c-.11.93-.45 1.64-1.03 2.13-.57.48-1.37.72-2.39.72z"/></g><g transform="translate(246.69,173.01)"><path d="M21.44.66c-2.81 0-5.34-.71-7.56-2.14-2.23-1.43-3.76-3.6-4.58-6.5l.58-.88-.94 6.39c-.15.97-.48 1.71-1.02 2.22-.53.51-1.28.77-2.25.77-.93 0-1.61-.3-2.05-.91-.43-.61-.57-1.47-.42-2.59l7.27-45.77c.15-1.02.51-1.77 1.08-2.25.58-.49 1.33-.73 2.25-.73.93 0 1.61.3 2.05.91.44.6.58 1.46.44 2.58l-3.28 20.42h-.8c1.26-2.52 3.04-4.51 5.34-5.95 2.3-1.46 4.95-2.19 7.95-2.19 2.76 0 5.16.61 7.22 1.83 2.06 1.21 3.65 2.95 4.77 5.23 1.11 2.27 1.67 4.95 1.67 8.05 0 3.88-.69 7.45-2.08 10.72-1.38 3.27-3.39 5.89-6.03 7.86-2.64 1.96-5.84 2.94-9.61 2.94zm-.73-4.72c2.72 0 4.99-.75 6.83-2.25 1.84-1.51 3.25-3.52 4.22-6.03.97-2.52 1.45-5.29 1.45-8.3 0-3.48-.85-6.11-2.55-7.91-1.69-1.79-4.01-2.69-6.97-2.69-2.67 0-4.93.75-6.8 2.25-1.87 1.5-3.28 3.48-4.25 5.95-.97 2.47-1.45 5.26-1.45 8.36 0 3.44.85 6.07 2.55 7.89 1.7 1.81 4.02 2.72 6.97 2.72z"/></g></g><g clip-path="url(#t-i)"><path fill="#78e14a" d="M228.97 170.65c-10.38-.06-14.89-9.51-14.25-15.69 1.34-12.84 14.79-15.53 24.57-10.33-17.21-3.6-20.44 7.16-20.44 7.16 18.91 13.24 32.12-4.93 28.29-20.29-4.32 4.97-11.21 5.6-18.49 5.6-10.21 0-18.49 8.28-18.49 18.49s8.28 18.49 18.49 18.49 18.49-8.28 18.49-18.49c0-1.07-.09-2.11-.27-3.13-.04 6.13-5.25 18.27-17.91 18.19z"/></g><g clip-path="url(#t-w1)"><path fill="#fff" d="M83.04 121.27l2.16-1.16c41.02-21.96 67.94-35.4 80.77-40.32l.03-.01c17.09-6.82 31.49-10.54 43.2-11.13.66-.03 1.31-.05 1.96-.07 29.25-.8 52.16 12.24 68.75 39.12l1.29 2.09 4.17-2.57-1.29-2.09c-17.57-28.48-41.91-42.3-73.02-41.45-.7.02-1.4.05-2.1.08h-.01c-12.25.62-27.16 4.44-44.74 11.45-13.02 4.99-40.13 18.52-81.33 40.57l-2.16 1.16z"/></g><g clip-path="url(#t-w2)"><path fill="#78e14a" d="M29.27 91.43c-.61-.72-1.64-.31-1.55-.04.66 1.97 5.87 9.95 23.71 19.4 18.06 9.57 58.47 20.89 117.29 17.58 40.55-2.28 81.33-13.49 130.8-13.59 32.61-.06 38.15 4.79 50.42 6.49 9.02 1.25 11.09-2.73 3.65-5.93-14.84-6.4-28.51-8.59-44.26-9.22-44.55-1.77-81.4 4.88-121.06 10.63-122.57 17.78-158.35-24.53-159.01-25.31z"/></g></svg>
+    </a>
 
-    <!-- Logo -->
-    <div class="logo-wrap">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 373.91998 254.999984" preserveAspectRatio="xMidYMid meet" aria-label="Carreb" role="img"><defs><g/><clipPath id="7137e066fc"><path d="M 0 0.0273438 L 373.839844 0.0273438 L 373.839844 254.972656 L 0 254.972656 Z M 0 0.0273438 " clip-rule="nonzero"/></clipPath><clipPath id="d0eb9e255b"><path d="M 210.160156 131.492188 L 248 131.492188 L 248 173.753906 L 210.160156 173.753906 Z M 210.160156 131.492188 " clip-rule="nonzero"/></clipPath><clipPath id="75495eb658"><path d="M 80 63 L 286 63 L 286 122 L 80 122 Z M 80 63 " clip-rule="nonzero"/></clipPath><clipPath id="b65d11d05e"><path d="M 285.707031 115.734375 L 81.035156 121.339844 L 79.558594 67.441406 L 284.230469 61.835938 Z M 285.707031 115.734375 " clip-rule="nonzero"/></clipPath><clipPath id="126a81a2d1"><path d="M 285.707031 115.734375 L 81.035156 121.339844 L 79.558594 67.441406 L 284.230469 61.835938 Z M 285.707031 115.734375 " clip-rule="nonzero"/></clipPath><clipPath id="caba2a452d"><path d="M 27 91 L 359 91 L 359 129 L 27 129 Z M 27 91 " clip-rule="nonzero"/></clipPath><clipPath id="cf711c0a93"><path d="M 27.792969 87.175781 L 361.519531 109.132812 L 358.601562 153.484375 L 24.875 131.527344 Z M 27.792969 87.175781 " clip-rule="nonzero"/></clipPath><clipPath id="95260fa3f3"><path d="M 24.855469 131.835938 L 358.582031 153.792969 L 361.5 109.441406 L 27.773438 87.484375 Z M 24.855469 131.835938 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#7137e066fc)"><path fill="#000000" d="M 0 0.0273438 L 374.167969 0.0273438 L 374.167969 254.972656 L 0 254.972656 Z M 0 0.0273438 " fill-opacity="1" fill-rule="nonzero"/></g><g fill="#ffffff" fill-opacity="1"><g transform="translate(85.031469, 173.008384)"><g><path d="M 18.75 0.65625 C 15.257812 0.65625 12.375 0.00390625 10.09375 -1.296875 C 7.820312 -2.609375 6.113281 -4.453125 4.96875 -6.828125 C 3.832031 -9.203125 3.265625 -11.941406 3.265625 -15.046875 C 3.265625 -17.660156 3.628906 -20.210938 4.359375 -22.703125 C 5.085938 -25.203125 6.222656 -27.441406 7.765625 -29.421875 C 9.316406 -31.410156 11.28125 -33 13.65625 -34.1875 C 16.03125 -35.375 18.863281 -35.96875 22.15625 -35.96875 C 24 -35.96875 25.78125 -35.722656 27.5 -35.234375 C 29.21875 -34.753906 30.707031 -34.078125 31.96875 -33.203125 C 32.644531 -32.816406 33.128906 -32.34375 33.421875 -31.78125 C 33.710938 -31.226562 33.804688 -30.695312 33.703125 -30.1875 C 33.609375 -29.675781 33.40625 -29.238281 33.09375 -28.875 C 32.78125 -28.507812 32.378906 -28.300781 31.890625 -28.25 C 31.410156 -28.207031 30.90625 -28.359375 30.375 -28.703125 C 29.15625 -29.566406 27.890625 -30.191406 26.578125 -30.578125 C 25.273438 -30.972656 23.875 -31.171875 22.375 -31.171875 C 20 -31.171875 17.988281 -30.707031 16.34375 -29.78125 C 14.695312 -28.863281 13.351562 -27.628906 12.3125 -26.078125 C 11.269531 -24.535156 10.503906 -22.804688 10.015625 -20.890625 C 9.535156 -18.972656 9.296875 -17.046875 9.296875 -15.109375 C 9.296875 -11.816406 10.082031 -9.164062 11.65625 -7.15625 C 13.226562 -5.144531 15.832031 -4.140625 19.46875 -4.140625 C 20.632812 -4.140625 21.847656 -4.320312 23.109375 -4.6875 C 24.367188 -5.050781 25.625 -5.644531 26.875 -6.46875 C 27.363281 -6.800781 27.847656 -6.929688 28.328125 -6.859375 C 28.816406 -6.785156 29.21875 -6.578125 29.53125 -6.234375 C 29.84375 -5.898438 30.046875 -5.503906 30.140625 -5.046875 C 30.242188 -4.585938 30.207031 -4.113281 30.03125 -3.625 C 29.863281 -3.144531 29.492188 -2.710938 28.921875 -2.328125 C 27.609375 -1.398438 26.003906 -0.671875 24.109375 -0.140625 C 22.222656 0.390625 20.4375 0.65625 18.75 0.65625 Z M 18.75 0.65625 "/></g></g></g><g fill="#ffffff" fill-opacity="1"><g transform="translate(118.667453, 173.008384)"><g><path d="M 14.453125 0.65625 C 12.421875 0.65625 10.519531 0.195312 8.75 -0.71875 C 6.988281 -1.644531 5.570312 -2.90625 4.5 -4.5 C 3.4375 -6.101562 2.90625 -7.921875 2.90625 -9.953125 C 2.90625 -12.472656 3.59375 -14.492188 4.96875 -16.015625 C 6.351562 -17.546875 8.519531 -18.671875 11.46875 -19.390625 C 14.425781 -20.117188 18.234375 -20.484375 22.890625 -20.484375 L 28.703125 -20.484375 L 28.125 -16.640625 L 23.6875 -16.640625 C 19.957031 -16.640625 17.015625 -16.441406 14.859375 -16.046875 C 12.703125 -15.660156 11.160156 -15.007812 10.234375 -14.09375 C 9.316406 -13.175781 8.859375 -11.914062 8.859375 -10.3125 C 8.859375 -8.1875 9.570312 -6.566406 11 -5.453125 C 12.4375 -4.335938 14.070312 -3.78125 15.90625 -3.78125 C 17.695312 -3.78125 19.351562 -4.164062 20.875 -4.9375 C 22.40625 -5.71875 23.703125 -6.867188 24.765625 -8.390625 C 25.835938 -9.921875 26.539062 -11.722656 26.875 -13.796875 L 28.265625 -22.671875 C 28.742188 -25.472656 28.390625 -27.597656 27.203125 -29.046875 C 26.015625 -30.503906 23.875 -31.234375 20.78125 -31.234375 C 18.988281 -31.234375 17.289062 -31.0625 15.6875 -30.71875 C 14.09375 -30.382812 12.492188 -29.757812 10.890625 -28.84375 C 10.265625 -28.5 9.6875 -28.351562 9.15625 -28.40625 C 8.625 -28.457031 8.1875 -28.664062 7.84375 -29.03125 C 7.507812 -29.394531 7.316406 -29.816406 7.265625 -30.296875 C 7.210938 -30.785156 7.332031 -31.269531 7.625 -31.75 C 7.914062 -32.238281 8.425781 -32.675781 9.15625 -33.0625 C 11 -34.070312 12.992188 -34.804688 15.140625 -35.265625 C 17.296875 -35.734375 19.394531 -35.96875 21.4375 -35.96875 C 24.726562 -35.96875 27.351562 -35.347656 29.3125 -34.109375 C 31.28125 -32.878906 32.625 -31.148438 33.34375 -28.921875 C 34.070312 -26.691406 34.195312 -24.070312 33.71875 -21.0625 L 30.734375 -2.390625 C 30.640625 -1.421875 30.3125 -0.691406 29.75 -0.203125 C 29.195312 0.273438 28.457031 0.515625 27.53125 0.515625 C 26.664062 0.515625 26.023438 0.222656 25.609375 -0.359375 C 25.203125 -0.941406 25.070312 -1.765625 25.21875 -2.828125 L 26.15625 -8.71875 L 26.734375 -7.984375 C 26.109375 -6.046875 25.148438 -4.4375 23.859375 -3.15625 C 22.578125 -1.875 21.113281 -0.914062 19.46875 -0.28125 C 17.820312 0.34375 16.148438 0.65625 14.453125 0.65625 Z M 14.453125 0.65625 "/></g></g></g><g fill="#ffffff" fill-opacity="1"><g transform="translate(157.170854, 173.008384)"><g><path d="M 5.59375 0.515625 C 4.675781 0.515625 4.007812 0.222656 3.59375 -0.359375 C 3.1875 -0.941406 3.054688 -1.789062 3.203125 -2.90625 L 7.921875 -32.984375 C 8.109375 -33.953125 8.476562 -34.664062 9.03125 -35.125 C 9.59375 -35.582031 10.335938 -35.8125 11.265625 -35.8125 C 12.128906 -35.8125 12.78125 -35.519531 13.21875 -34.9375 C 13.65625 -34.363281 13.800781 -33.546875 13.65625 -32.484375 L 12.78125 -26.875 L 11.984375 -26.875 C 13.003906 -29.78125 14.710938 -32.007812 17.109375 -33.5625 C 19.503906 -35.113281 22.207031 -35.9375 25.21875 -36.03125 C 26.28125 -36.082031 27.003906 -35.953125 27.390625 -35.640625 C 27.773438 -35.328125 27.96875 -34.78125 27.96875 -34 C 27.96875 -32.988281 27.722656 -32.25 27.234375 -31.78125 C 26.753906 -31.320312 25.984375 -31.019531 24.921875 -30.875 L 23.46875 -30.8125 C 19.59375 -30.46875 16.804688 -29.300781 15.109375 -27.3125 C 13.410156 -25.332031 12.296875 -22.71875 11.765625 -19.46875 L 9.015625 -2.328125 C 8.910156 -1.398438 8.566406 -0.691406 7.984375 -0.203125 C 7.410156 0.273438 6.613281 0.515625 5.59375 0.515625 Z M 5.59375 0.515625 "/></g></g></g><g fill="#ffffff" fill-opacity="1"><g transform="translate(183.178804, 173.008384)"><g><path d="M 5.59375 0.515625 C 4.675781 0.515625 4.007812 0.222656 3.59375 -0.359375 C 3.1875 -0.941406 3.054688 -1.789062 3.203125 -2.90625 L 7.921875 -32.984375 C 8.109375 -33.953125 8.476562 -34.664062 9.03125 -35.125 C 9.59375 -35.582031 10.335938 -35.8125 11.265625 -35.8125 C 12.128906 -35.8125 12.78125 -35.519531 13.21875 -34.9375 C 13.65625 -34.363281 13.800781 -33.546875 13.65625 -32.484375 L 12.78125 -26.875 L 11.984375 -26.875 C 13.003906 -29.78125 14.710938 -32.007812 17.109375 -33.5625 C 19.503906 -35.113281 22.207031 -35.9375 25.21875 -36.03125 C 26.28125 -36.082031 27.003906 -35.953125 27.390625 -35.640625 C 27.773438 -35.328125 27.96875 -34.78125 27.96875 -34 C 27.96875 -32.988281 27.722656 -32.25 27.234375 -31.78125 C 26.753906 -31.320312 25.984375 -31.019531 24.921875 -30.875 L 23.46875 -30.8125 C 19.59375 -30.46875 16.804688 -29.300781 15.109375 -27.3125 C 13.410156 -25.332031 12.296875 -22.71875 11.765625 -19.46875 L 9.015625 -2.328125 C 8.910156 -1.398438 8.566406 -0.691406 7.984375 -0.203125 C 7.410156 0.273438 6.613281 0.515625 5.59375 0.515625 Z M 5.59375 0.515625 "/></g></g></g><g fill="#ffffff" fill-opacity="1"><g transform="translate(246.687683, 173.008384)"><g><path d="M 21.4375 0.65625 C 18.625 0.65625 16.101562 -0.0546875 13.875 -1.484375 C 11.644531 -2.910156 10.117188 -5.078125 9.296875 -7.984375 L 9.875 -8.859375 L 8.9375 -2.46875 C 8.789062 -1.5 8.453125 -0.757812 7.921875 -0.25 C 7.390625 0.257812 6.640625 0.515625 5.671875 0.515625 C 4.742188 0.515625 4.0625 0.210938 3.625 -0.390625 C 3.195312 -1.003906 3.054688 -1.867188 3.203125 -2.984375 L 10.46875 -48.75 C 10.613281 -49.769531 10.972656 -50.519531 11.546875 -51 C 12.128906 -51.488281 12.878906 -51.734375 13.796875 -51.734375 C 14.722656 -51.734375 15.40625 -51.429688 15.84375 -50.828125 C 16.28125 -50.222656 16.425781 -49.363281 16.28125 -48.25 L 13 -27.828125 L 12.203125 -27.828125 C 13.460938 -30.347656 15.242188 -32.332031 17.546875 -33.78125 C 19.847656 -35.238281 22.5 -35.96875 25.5 -35.96875 C 28.257812 -35.96875 30.664062 -35.359375 32.71875 -34.140625 C 34.78125 -32.929688 36.367188 -31.1875 37.484375 -28.90625 C 38.597656 -26.632812 39.15625 -23.953125 39.15625 -20.859375 C 39.15625 -16.984375 38.460938 -13.410156 37.078125 -10.140625 C 35.703125 -6.867188 33.691406 -4.25 31.046875 -2.28125 C 28.410156 -0.320312 25.207031 0.65625 21.4375 0.65625 Z M 20.703125 -4.0625 C 23.421875 -4.0625 25.695312 -4.8125 27.53125 -6.3125 C 29.375 -7.820312 30.78125 -9.832031 31.75 -12.34375 C 32.71875 -14.863281 33.203125 -17.628906 33.203125 -20.640625 C 33.203125 -24.117188 32.351562 -26.753906 30.65625 -28.546875 C 28.96875 -30.335938 26.644531 -31.234375 23.6875 -31.234375 C 21.019531 -31.234375 18.753906 -30.484375 16.890625 -28.984375 C 15.023438 -27.484375 13.609375 -25.5 12.640625 -23.03125 C 11.671875 -20.5625 11.1875 -17.773438 11.1875 -14.671875 C 11.1875 -11.234375 12.035156 -8.601562 13.734375 -6.78125 C 15.429688 -4.96875 17.753906 -4.0625 20.703125 -4.0625 Z M 20.703125 -4.0625 "/></g></g></g><g clip-path="url(#d0eb9e255b)"><path fill="#78e14a" d="M 228.972656 170.648438 C 218.597656 170.585938 214.082031 161.140625 214.726562 154.960938 C 216.066406 142.117188 229.515625 139.425781 239.292969 144.628906 C 222.078125 141.027344 218.855469 151.785156 218.855469 151.785156 C 237.769531 165.023438 250.976562 146.855469 247.148438 131.492188 C 242.832031 136.460938 235.941406 137.097656 228.660156 137.097656 C 218.449219 137.097656 210.171875 145.375 210.171875 155.585938 C 210.171875 165.796875 218.449219 174.074219 228.660156 174.074219 C 238.871094 174.074219 247.148438 165.796875 247.148438 155.585938 C 247.148438 154.519531 247.058594 153.472656 246.882812 152.453125 C 246.839844 158.578125 241.628906 170.726562 228.972656 170.648438 Z M 228.972656 170.648438 " fill-opacity="1" fill-rule="nonzero"/></g><g clip-path="url(#75495eb658)"><g clip-path="url(#b65d11d05e)"><g clip-path="url(#126a81a2d1)"><path fill="#ffffff" d="M 83.035156 121.269531 L 85.199219 120.113281 C 126.214844 98.152344 153.140625 84.714844 165.96875 79.796875 L 166 79.785156 C 183.09375 72.960938 197.492188 69.25 209.203125 68.660156 C 209.859375 68.628906 210.515625 68.605469 211.164062 68.585938 C 240.414062 67.785156 263.328125 80.828125 279.910156 107.710938 L 281.199219 109.796875 L 285.371094 107.222656 L 284.082031 105.136719 C 266.511719 76.652344 242.171875 62.832031 211.0625 63.6875 C 210.367188 63.707031 209.667969 63.730469 208.964844 63.765625 L 208.957031 63.765625 C 196.710938 64.382812 181.796875 68.203125 164.214844 75.21875 C 151.195312 80.210938 124.082031 93.734375 82.882812 115.792969 L 80.722656 116.949219 Z M 83.035156 121.269531 " fill-opacity="1" fill-rule="nonzero"/></g></g></g><g clip-path="url(#caba2a452d)"><g clip-path="url(#cf711c0a93)"><g clip-path="url(#95260fa3f3)"><path fill="#78e14a" d="M 29.269531 91.433594 C 28.660156 90.710938 27.632812 91.117188 27.722656 91.386719 C 28.382812 93.355469 33.589844 101.335938 51.433594 110.789062 C 69.492188 120.359375 109.902344 131.679688 168.71875 128.367188 C 209.273438 126.085938 250.054688 114.875 299.523438 114.773438 C 332.132812 114.710938 337.671875 119.566406 349.945312 121.265625 C 358.96875 122.511719 361.03125 118.535156 353.597656 115.332031 C 338.761719 108.933594 325.085938 106.738281 309.339844 106.113281 C 264.789062 104.347656 227.941406 110.992188 188.277344 116.746094 C 65.707031 134.527344 29.929688 92.21875 29.269531 91.433594 Z M 29.269531 91.433594 " fill-opacity="1" fill-rule="nonzero"/></g></g></g></svg>
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Independent car cost &amp; emissions</span>
+
+    <h1>Buying a car blind is <span class="accent">expensive guessing.</span></h1>
+    <p class="tagline">The estimated 5-year cost of every new car in Australia &mdash; before you sign. Less confusion. More living.</p>
+
+    <div class="capture">
+      <form id="form" novalidate>
+        <label class="honey" for="company">Company (leave blank)</label>
+        <input class="honey" id="company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label class="honey" for="email">Email address</label>
+        <div class="field-row">
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Enter your email address" required>
+          <button class="submit" type="submit">Notify Me &rarr;</button>
+        </div>
+        <p class="field-error" role="alert" aria-live="assertive" hidden></p>
+        <p class="reassure"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2l6 2.5v4c0 3.7-2.5 6.6-6 7.5-3.5-.9-6-3.8-6-7.5v-4L10 2z" stroke="#547615" stroke-width="1.6"/><path d="M7.2 10l1.9 1.9L13 8" stroke="#547615" stroke-width="1.6" stroke-linecap="round"/></svg>One email at launch. Nothing else.</p>
+      </form>
+      <div class="success" id="success" role="status" aria-live="polite">
+        <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#111E18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>You&rsquo;re on the waitlist.</h3>
+        <p>Thank you for joining &mdash; you&rsquo;ll be the first to know when we&rsquo;re ready.</p>
+      </div>
     </div>
 
-    <!-- Headline -->
-    <h1 class="headline">Less confusion.<br><span class="accent">More living.</span></h1>
+    <div class="badge"><span class="dot" aria-hidden="true"></span><span>Launching July 2026</span></div>
+    <a class="url" href="index-prelaunch-July2026.html?play=1">www.carreb.com.au</a>
+    <p class="indep">Editorially independent &mdash; no manufacturer or dealer influence on ratings.</p>
+  </main>
 
-    <!-- Rule -->
-    <div class="rule"></div>
+<script>
+(function(){
+  'use strict';
+  /* BACKEND ASSUMPTION (verify): posts {Email, Postcode} to the existing
+     Google Apps Script web app. no-cors required (opaque response). */
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBI-hqxF9cvI9M9-aw3zGp1H-ASBbhO-EyoxtqHomQ-hHe66TBP7ZQswz-9j30qJL3/exec';
+  var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  var form = document.getElementById('form');
+  var success = document.getElementById('success');
+  var err = form.querySelector('.field-error');
+  var btn = form.querySelector('button[type="submit"]');
 
-    <!-- Arriving badge -->
-    <div class="date-badge">
-      <div class="dot"></div>
-      <span>Arriving 1 June 2026</span>
-    </div>
-
-    <!-- URL -->
-    <a class="url" href="https://www.carreb.com.au">www.carreb.com.au</a>
-
-  </div>
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(form.querySelector('input[name="company"]').value){ reveal(); return; }
+    var email = document.getElementById('email').value.trim();
+    if(!EMAIL_RE.test(email)){
+      err.textContent = 'Please enter a valid email address.';
+      err.hidden = false; document.getElementById('email').focus(); return;
+    }
+    err.hidden = true;
+    var label = btn.textContent; btn.disabled = true; btn.textContent = 'Joining…';
+    var data = new FormData();
+    data.append('Email', email);
+    data.append('Postcode', '');
+    fetch(ENDPOINT, { method:'POST', body:data, mode:'no-cors' })
+      .then(reveal)
+      .catch(function(){
+        btn.disabled = false; btn.textContent = label;
+        err.textContent = 'Something went wrong. Please try again.'; err.hidden = false;
+      });
+  });
+  function reveal(){ form.style.display='none'; success.classList.add('show'); }
+})();
+</script>
 </body>
 </html>
